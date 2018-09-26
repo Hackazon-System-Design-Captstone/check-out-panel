@@ -49,37 +49,34 @@ const addItem = (item, callback) => {
     } else {
       callback(null, results);
     }
-  })
+  });
 };
 
-
-// Product.findById(id, function (err, tank) {
-//   if (error) {
-//     console.log(error);
-//   } else {
-//     tank.size = 'large';
-//     tank.save(function (err, updatedTank) {
-//       if (err) return handleError(err);
-//       res.send(updatedTank);
-//     });
-//   }
-// });
-
+const updateItem = (id, item, callback) => {
+  Product.update({ product_id: id }, item, (error, results) => {
+    if (error) {
+      callback(error, null);
+    } else {
+      callback(null, results);
+    }
+  });
+}
 
 
 const removeItemById = (id, callback) => {
-  Product.find({ product_id: id }, (err, data) => {
+  Product.deleteOne({ product_id: id }, (err, data) => {
     if (err) {
       callback(err, null);
     } else {
       callback(null, data);
     }
-  }).remove();
+  });
 };
 
 module.exports = {
   retrieveInformationById,
   addItem,
+  updateItem,
   removeItemById,
 };
 

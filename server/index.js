@@ -17,10 +17,8 @@ app.use((req, res, next) => {
 app.use(cors( { origin: 'http://localhost:3000'} ));
 app.use(express.static('./client/dist'));
 
-app.get('/checkout/*', (req, res) => {
-  // * representing the product ID
-  const productId = req.originalUrl.split('/')[2];
-  db.retrieveInformationById(productId, (err, data) => {
+app.get('/checkout/:id', (req, res) => {
+  db.retrieveInformationById(req.params.id, (err, data) => {
     if (err) {
       res.send(err);
     } else {
@@ -33,27 +31,24 @@ app.post('/add-item/', (req, res) => {
   db.addItem(req.body, (error, results) => {
     if (error) {
       res.send(err);
-      console.log(error)
     } else {
       res.status(201).send('Post successful!');
     }
   })
 })
 
-// app.put('/update-item/:id', function(req, res) {
-//     const update = _.assign({ "updatedAt": new Date() }, req.body);
-//     Word.findByIdAndUpdate(req.params.id, update, function(err, raw) {
-//         if (err) {
-//             res.send(err);
-//         }
-//         res.send(raw);
-//     });
-// });
+app.put('/update-item/:id', function(req, res) {
+  db.updateItem(req.params.id, req.body, (error, results) => {
+    if (error) {
+      res.send(error);
+    } else {
+      res.status(201).send('Update successful!')
+    }
+  })
+});
 
-app.delete('/delete-item/*', (req, res) => {
-  // * representing the product ID
-  const productId = req.originalUrl.split('/')[2];
-  db.removeItemById(productId, (err, data) => {
+app.delete('/delete-item/:id', (req, res) => {
+  db.removeItemById(req.params.id, (err, data) => {
     if (err) {
       res.send(err);
     } else {
