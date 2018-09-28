@@ -1,8 +1,7 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
 const helper = require('./helpers/dataGenerator.js');
-mongoose.connect(process.env.MLAB_DB_URI, { useNewUrlParser: true });
-
+mongoose.connect('mongodb://andrewtruongngo:p1604166@ds113873.mlab.com:13873/check-out-panel', { useNewUrlParser: true });
 
 const productSchema = new mongoose.Schema({
   product_id: Number,
@@ -24,10 +23,6 @@ const productSchema = new mongoose.Schema({
     provider: String,
     rating: Number,
     description: String,
-  },
-  used_option: {
-    exists: Boolean,
-    price: Number,
   },
 });
 

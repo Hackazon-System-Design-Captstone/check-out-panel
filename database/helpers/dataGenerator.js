@@ -4,7 +4,6 @@ const cats = require('./cats.js');
 module.exports.generateRandomData = (id) => {
   const obj = {
     protection_plan: {},
-    used_option: {},
   };
   obj.product_id = id;
   obj.name = faker.commerce.productName();
@@ -12,9 +11,9 @@ module.exports.generateRandomData = (id) => {
   if (cats.data[id]) {
     obj.image = cats.data[id];
   } else {
-    obj.image = Math.floor(cats.data[id / 3]);
+    obj.image = cats.data[Math.floor(id / 3)];
   }
-  
+
   obj.link = faker.lorem.sentence();
   obj.shares = Math.floor(Math.random() * 100) + 1;
   obj.price = faker.commerce.price();
@@ -32,8 +31,6 @@ module.exports.generateRandomData = (id) => {
   obj.protection_plan.rating = Math.floor(Math.random()*5);
   obj.protection_plan.description = faker.lorem.lines();
 
-  obj.used_option.exists = faker.random.boolean();
-  obj.used_option.price = faker.commerce.price();
   return obj;
 };
 

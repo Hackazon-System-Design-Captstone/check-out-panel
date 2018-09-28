@@ -1,5 +1,11 @@
 const mongoose = require('mongoose');
-mongoose.connect(process.env.MLAB_DB_URI, { useNewUrlParser: true });
+mongoose.connect(process.env.MLAB_DB_URI, { useNewUrlParser: true }, (error, results) => {
+  if (error) {
+    console.log('ERROR DB connection failed')
+  } else {
+    console.log('DB connection successful!')
+  }
+});
 
 
 const productSchema = new mongoose.Schema({
@@ -22,10 +28,6 @@ const productSchema = new mongoose.Schema({
     provider: String,
     rating: Number,
     description: String,
-  },
-  used_option: {
-    exists: Boolean,
-    price: Number,
   },
 });
 
