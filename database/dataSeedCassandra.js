@@ -1,6 +1,6 @@
 const fs = require('fs');
-const faker = require('faker');
 const cats = require('./helpers/cats.js');
+const random = require('./helpers/randomGenerator.js');
 
 
 const home = require("os").homedir();
@@ -19,7 +19,7 @@ let seedFileItem = (startingLoop, maxLoop, currentNumber) => {
   } else {
     let string = "";
     for (let i = 1; i <= 250000; i++) {
-      let record = `${currentNumber}|${'Clean-O-Bot ' + currentNumber}|${cats.data[Math.floor(Math.random() * cats.data.length)]}|${faker.lorem.sentence()}|${Math.floor(Math.random() * 100) + 1}|${faker.commerce.price()}|${faker.random.boolean()}|${faker.random.boolean()}|${faker.random.boolean()}|${Math.floor(Math.random() * 10) + 1}|${faker.company.companyName()}|${currentNumber}|${faker.random.boolean()}|${faker.lorem.sentence()}|${(Math.random() * (1000) / 100).toFixed(2)}|${Math.floor(Math.random()*5) +1}|${faker.company.companyName()}|${Math.floor(Math.random()*5)}|${faker.lorem.sentence()}`;
+      let record = `${currentNumber}|${'Clean-O-Bot ' + currentNumber}|${cats.data[Math.floor(Math.random() * cats.data.length)]}|${random.sentence[Math.floor(Math.random() * 25)]}|${Math.floor(Math.random() * 100) + 1}|${random.price[Math.floor(Math.random() * 25)]}|${random.boolean[Math.floor(Math.random() * 2)]}|${random.boolean[Math.floor(Math.random() * 2)]}|${random.boolean[Math.floor(Math.random() * 2)]}|${Math.floor(Math.random() * 10) + 1}|${random.company[Math.floor(Math.random() * 25)]}|${currentNumber}|${random.boolean[Math.floor(Math.random() * 2)]}|${random.sentence[Math.floor(Math.random() * 25)]}|${(Math.random() * (1000) / 100).toFixed(2)}|${Math.floor(Math.random()*5) +1}|${random.company[Math.floor(Math.random() * 25)]}|${Math.floor(Math.random()*5)}|${random.sentence[Math.floor(Math.random() * 25)]}`;
       string += record + '\n';
       currentNumber++;
     }

@@ -82,33 +82,6 @@ module.exports = {
   removeItemById,
 };
 
-// removeItemById({
-//   product_id: 105,
-//   name: 'Pizza',
-//   image: 'Party',
-//   shares: 100,
-//   link: 'Hot dog',
-//   price: 99,
-//   is_prime: true,
-//   in_stock: true,
-//   giftwrap_available: true,
-//   quantity_max: 10,
-//   seller: 'Bobby',
-//   protection_plan: {
-//     exists: true,
-//     name: 'Chai',
-//     price: 999,
-//     years: 2,
-//     provider: 'Joe',
-//     rating: 12,
-//     description: 'It a good one',
-//   },
-//   used_option: {
-//     exists: true,
-//     price: 99,
-//   },
-// })
-
 
 // Post sample
 // {"product_id":106,"name":"Fries","image":"Party","shares":100,"link":"Hot dog","price":99,"is_prime":true,"in_stock":true,"giftwrap_available":true,"quantity_max":10,"seller":"Bobby","protection_plan":{"exists":true,"name":"Chai","price":999,"years":2,"provider":"Joe","rating":12,"description":"It a good one"},"used_option":{"exists":true,"price":99}}
