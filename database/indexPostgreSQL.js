@@ -13,9 +13,9 @@ connection.connect((error, results) => {
 let searchQuery = (productID, callback) => {
   connection.query(`SELECT * FROM product_table INNER JOIN protection_table ON product_table.product_id = protection_table.product_id WHERE product_table.product_id = ${productID};`, (error, results) => {
     if (error) {
-      callback(error, null)
+      callback(error, null);
     } else {
-      callback(null, results.rows[0])
+      callback(null, results.rows[0]);
     }
   })
 }
@@ -23,25 +23,57 @@ let searchQuery = (productID, callback) => {
 let insertQuery = (product, callback) => {
   connection.query(`INSERT INTO product_table (name, image, link, shares, price, is_prime, in_stock, giftwrap_available, quantity_max, seller) VALUES ('${product.name}', '${product.image}', '${product.link}', ${product.shares}, ${product.price}, ${product.is_prime}, ${product.in_stock}, ${product.giftwrap_available}, ${product.quantity_max}, '${product.seller}')`, (error, results) => {
     if (error) {
-      console.log(`ERROR insert query`, error)
+      console.log(`ERROR insert query`, error);
     } else {
-      console.log(`Successfully inserted into DB!`)
+      console.log(`Successfully inserted into DB!`);
     }
   });
 
   connection.query(`INSERT INTO protection_table (available, protection_name, protection_price, years, provider, rating, description) VALUES (${product.available}, '${product.protection_name}', ${product.protection_price}, ${product.years}, '${product.provider}', ${product.rating}, '${product.description}')`, (error, results) => {
     if (error) {
-      callback(error, null)
+      callback(error, null);
     } else {
       callback(null, results);
     }
   });
 }
 
+let updateQuery = (product, callback) => {
+  let key = Object.keys(product);
+  connection.query(`UPDATE product_table SET ${key[0]} = '${product.key[0]}' WHERE product_id = 10000002`, (error, results) => {
+    if (error) {
+      console.log('ERROR failed to update')
+      callback(error, null);
+    } else {
+      console.log('Successfully updated record!')
+      callback(null, results);
+    }
+  })
+}
+
+let deleteQuery = (productID, callback) => {
+  connection.query(`DELETE FROM protection_table WHERE product_id = ${productID}`, (error, results) => {
+    if (error) {
+      console.log(`ERROR delete query`, error);
+    } else {
+      console.log(`Successfully deleted from DB!`);
+    }
+  })
+
+  connection.query(`DELETE FROM product_table WHERE product_id = ${productID}`, (error, results) => {
+    if (error) {
+      callback(error, null);
+    } else {
+      callback(null, results);
+    }
+  })
+}
 
 module.exports = {
   searchQuery,
-  insertQuery
+  insertQuery,
+  updateQuery,
+  deleteQuery,
 }
 
 //Stringify Post Object

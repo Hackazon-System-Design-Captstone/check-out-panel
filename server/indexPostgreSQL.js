@@ -13,7 +13,7 @@ app.use((req, res, next) => {
   next();
 });
 
-// app.use(cors( { origin: 'http://localhost:3000'} ));
+app.use(cors( { origin: 'http://localhost:3000'} ));
 app.use(express.static('../client/dist/'));
 
 app.get('/checkout/:id', (req, res) => {
@@ -55,6 +55,26 @@ app.post('/add-product', (req, res) => {
       res.send(error);
     } else {
       res.status(201).send('Post successful!')
+    }
+  })
+})
+
+app.put('/update-product', (req, res) => {
+  controller.updateQuery(req.body, (error, results) => {
+    if (error) {
+      res.send(error);
+    } else {
+      res.status(200).send('Update successful!')
+    }
+  })
+})
+
+app.delete('/delete-product/:id', (req, res) => {
+  controller.deleteQuery(req.params.id, (error, results) => {
+    if (error) {
+      res.send(error);
+    } else {
+      res.status(202).send('Delete successful!')
     }
   })
 })
