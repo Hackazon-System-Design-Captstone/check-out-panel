@@ -14,7 +14,7 @@ const Info = ({ productData }) => {
 
   return (
     <div>
-      <div className={ styles.price }>${productData.price}.00</div>
+      <div className={ styles.price }>${productData.price}</div>
       <div className={ styles.miniSpacing }></div>
       <div style={ styleIsPrime }>
         <div><img src={'https://s3-us-west-1.amazonaws.com/mattminwoolee-checkout/images/isPrime.png'} className={ styles.iconPrime } /> | <b>FREE</b> One-Day</div>

@@ -20,6 +20,7 @@ class Checkout extends React.Component {
       method: 'GET',
       contentType: 'application/json',
       success: (data) => {
+        console.log(data);
         this.setState({
           productData: data,
         });

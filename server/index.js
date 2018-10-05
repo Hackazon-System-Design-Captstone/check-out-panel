@@ -7,6 +7,8 @@ const app = express();
 const bodyParser = require('body-parser');
 const path = require('path');
 const db = require('../database');
+const controller = require('../database/indexPostgreSQL.js');
+
 
 app.use(bodyParser.json());
 app.use((req, res, next) => {

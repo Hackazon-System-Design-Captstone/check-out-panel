@@ -27,7 +27,7 @@ let seedFileItem = (startingLoop, maxLoop, currentNumber) => {
       currentNumber++;
     }
 
-    fs.appendFile(path + 'itemDataPost1.csv', string, (err) => {
+    fs.appendFile(path + 'productDataPost.csv', string, (err) => {
       if (err) throw err;
       console.log('finished loop ' + startingLoop);
       startingLoop++;
@@ -50,7 +50,7 @@ let seedFileProtection = (startingLoop, maxLoop, currentNumber) => {
       currentNumber++;
     }
 
-    fs.appendFile(path + 'protectionDataPost1.csv', protectionString, (err) => {
+    fs.appendFile(path + 'protectionDataPost.csv', protectionString, (err) => {
       if (err) throw err;
       console.log('finished loop ' + startingLoop);
       startingLoop++;
