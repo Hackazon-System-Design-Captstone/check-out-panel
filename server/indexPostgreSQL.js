@@ -1,11 +1,15 @@
+let nr = require('newrelic');
+
 const express = require('express');
 const cors = require('cors');
 
 const app = express();
 
 const bodyParser = require('body-parser');
-// const path = require('path');
+const path = require('path');
 const controller = require('../database/indexPostgreSQL.js');
+
+const DIST_DIR = path.join(__dirname, '../client/dist/');
 
 app.use(bodyParser.json());
 app.use((req, res, next) => {
@@ -13,8 +17,9 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(cors( { origin: 'http://localhost:3000'} ));
-app.use(express.static('../client/dist/'));
+// app.use(cors( { origin: 'http://localhost:3000'} ));
+app.use(express.static(DIST_DIR));
+
 
 app.get('/checkout/:id', (req, res) => {
   controller.searchQuery(req.params.id, (error, results) => {
