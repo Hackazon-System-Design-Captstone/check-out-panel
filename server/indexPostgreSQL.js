@@ -12,10 +12,10 @@ const controller = require('../database/indexPostgreSQL.js');
 const DIST_DIR = path.join(__dirname, '../client/dist/');
 
 app.use(bodyParser.json());
-app.use((req, res, next) => {
-  console.log(`${req.method} request recieved at ${req.url}.`);
-  next();
-});
+// app.use((req, res, next) => {
+//   console.log(`${req.method} request recieved at ${req.url}.`);
+//   next();
+// });
 
 // app.use(cors( { origin: 'http://localhost:3000'} ));
 app.use(express.static(DIST_DIR));
@@ -26,7 +26,6 @@ app.get('/checkout/:id', (req, res) => {
     if (error) {
       console.error('ERROR searchQuery controller failed')
     } else {
-      console.log('Successful searchQuery!');
       let result = {
         giftwrap_available: results.giftwrap_available,
         image: results.image,
