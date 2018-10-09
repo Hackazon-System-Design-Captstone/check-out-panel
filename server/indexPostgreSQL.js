@@ -2,6 +2,7 @@ let nr = require('newrelic');
 
 const express = require('express');
 const cors = require('cors');
+const redis = require("redis");
 
 const app = express();
 
@@ -10,6 +11,16 @@ const path = require('path');
 const controller = require('../database/indexPostgreSQL.js');
 
 const DIST_DIR = path.join(__dirname, '../client/dist/');
+
+let client = redis.createClient();
+
+client.on('connect', function(error) {
+  if (error) {
+    console.log('ERROR connecting to redis')
+  } else {
+    console.log('Connected to redis...')
+  }
+});
 
 app.use(bodyParser.json());
 // app.use((req, res, next) => {
@@ -22,35 +33,46 @@ app.use(express.static(DIST_DIR));
 
 
 app.get('/checkout/:id', (req, res) => {
-  controller.searchQuery(req.params.id, (error, results) => {
-    if (error) {
-      console.error('ERROR searchQuery controller failed')
+
+  client.get(req.params.id, (error, results) => {
+
+    if (results !== null) {
+      res.send(JSON.parse(results))
     } else {
-      let result = {
-        giftwrap_available: results.giftwrap_available,
-        image: results.image,
-        in_stock: results.in_stock,
-        is_prime: results.is_prime,
-        link: results.link,
-        name: results.name,
-        price: results.price,
-        product_id: results.product_id,
-        quantity_max: results.quantity_max,
-        seller: results.seller,
-        shares: results.shares,
-        protection_plan: {
-          description: results.description,
-          exists: results.available,
-          name: results.protection_name,
-          price: results.protection_price,
-          provider: results.provider,
-          rating: results.rating,
-          years: results.years,
+      controller.searchQuery(req.params.id, (error, results) => {
+        if (error) {
+          console.error('ERROR searchQuery controller failed')
+        } else {
+
+          let result = {
+            giftwrap_available: results.giftwrap_available,
+            image: results.image,
+            in_stock: results.in_stock,
+            is_prime: results.is_prime,
+            link: results.link,
+            name: results.name,
+            price: results.price,
+            product_id: results.product_id,
+            quantity_max: results.quantity_max,
+            seller: results.seller,
+            shares: results.shares,
+            protection_plan: {
+              description: results.description,
+              exists: results.available,
+              name: results.protection_name,
+              price: results.protection_price,
+              provider: results.provider,
+              rating: results.rating,
+              years: results.years,
+            }
+          }
+          client.setex(req.params.id, 10, JSON.stringify(result));
+          res.send(result);
         }
-      }
-      res.send(result);
+      })
     }
   })
+
 })
 
 app.post('/add-product', (req, res) => {
