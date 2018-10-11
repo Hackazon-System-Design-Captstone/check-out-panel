@@ -66,13 +66,12 @@ app.get('/checkout/:id', (req, res) => {
               years: results.years,
             }
           }
-          client.setex(req.params.id, 10, JSON.stringify(result));
+          client.setex(req.params.id, 1000000, JSON.stringify(result));
           res.send(result);
         }
       })
     }
   })
-
 })
 
 app.post('/add-product', (req, res) => {

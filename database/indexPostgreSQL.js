@@ -1,10 +1,17 @@
 const pg = require('pg');
-const connectionString = 'postgres://localhost:5432/sample_db';
-const connection = new pg.Client(connectionString);
+// const connectionString = 'postgres://localhost:5432/sample_db';
+let client = {
+  host: 'ec2-18-144-17-138.us-west-1.compute.amazonaws.com',
+  post: 5432,
+  user: 'power_user',
+  password: '$password',
+  database: 'hackazon'
+}
+const connection = new pg.Client(client);
 
 connection.connect((error, results) => {
   if (error) {
-    console.log('ERROR failed to connect to DB')
+    console.log('ERROR failed to connect to DB', error)
   } else {
     console.log('Successfully connected to DB!')
   }

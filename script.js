@@ -11,13 +11,16 @@ export let options = {
 export default function() {
   let random = Math.random();
   if (random > 0.2) {
-    let res = http.get(`http://localhost:3003/checkout/${Math.floor(Math.random() * 2000000) + 8000001}`);
+    let res = http.get(`http://localhost:3000/${Math.floor(Math.random() * 1000) + 9998999}`);
+    check(res, {
+      "status was 200": (r) => r.status == 200,
+      "transaction time OK": (r) => r.timings.duration < 1000
+    });
   } else {
-    let res = http.get(`http://localhost:3003/checkout/${Math.floor(Math.random() * 10000000) + 1}`);
+    let res = http.get(`http://localhost:3000/${Math.floor(Math.random() * 10000000) + 1}`);
+    check(res, {
+      "status was 200": (r) => r.status == 200,
+      "transaction time OK": (r) => r.timings.duration < 1000
+    });
   }
-
-  check(res, {
-    "status was 200": (r) => r.status == 200,
-    "transaction time OK": (r) => r.timings.duration < 1000
-  });
 }
